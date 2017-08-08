@@ -1,0 +1,40 @@
+﻿## APIVersion: 100019
+## Title: Raid Organiser
+## Description: GOAT REKT
+## Version: 0.1
+## Author: Sanct
+## SavedVariables: RaidOrganiser_SavedVars
+
+
+RaidOrganiser.lua
+RaidOrganiserUltimates.xml
+
+Settings.lua
+
+PingHandler.lua
+ChatHandler.lua
+UI_Tools.lua
+
+
+
+modules/resources/Ultimate.lua
+modules/resources/Resources.lua
+modules/resources/ResourceUI.lua
+
+modules/combat/Combat.lua
+
+modules/resources/UltimateUI.lua
+
+
+
+
+
+; DISCLOSURE:
+; This Add-on is not created by, affiliated with or sponsored by ZeniMax
+; Media Inc. or its affiliates. The Elder Scrolls� and related logos are
+; registered trademarks or trademarks of ZeniMax Media Inc. in the United
+; States and/or other countries. All rights reserved.
+; You can read the full terms at https://account.elderscrollsonline.com/add-on-terms
+;
+;
+;
