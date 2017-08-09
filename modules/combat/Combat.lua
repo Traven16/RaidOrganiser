@@ -22,7 +22,7 @@ local Move = false
 
 --========================================== LOCAL FUNCTIONS ===========================================================
 
-
+-- Sorts a two-dimensional, numerically indiced table by the i-th value
 local function CombatDataToSortedList( tableToSort, i )
     local sortedList = {}
     for k,v in pairs(tableToSort) do
@@ -36,6 +36,7 @@ local function CombatDataToSortedList( tableToSort, i )
     table.sort(sortedList, function(a, b) return a[i] > b[i]  end)
     return sortedList
 end
+
 
 local function GeneratePingData( num )
     local sendVal = 0
@@ -169,6 +170,7 @@ function Combat.GeneratePingDataDummy()
     end
 end
 
+-- Setup everything
 function Combat.Init()
     RO.RegisterForCombatEventNotification(this)
     --RaidOrganiser.Chat.RegisterPrefix("C",this)
@@ -181,6 +183,7 @@ function Combat.Init()
     damageLabel = RO.UI.DamageList("damageLabel", RO_Combat, {0,0}, 2)
 end
 
+-- Required function to use the UIHandler
 function Combat.UpdateUI()
     damageLabel:Update(Combat.DataForDisplay())
 end
@@ -189,6 +192,7 @@ function Combat.GetData()
     return combatData
 end
 
+-- Required function to use the PingHandler
 function Combat.GeneratePingData()
     if(unprocessed[1] > unprocessed[2]) then
         return GeneratePingData(1)
@@ -197,6 +201,7 @@ function Combat.GeneratePingData()
     end
 end
 
+-- Required function to use the PingHandler
 function Combat.ProcessPingData(unitTag, combatCoord)
     local playertag = RO.UnitDisplayNameFromTag(unitTag)
     -- make sure we don't acces nil values
@@ -231,7 +236,7 @@ function Combat.ProcessPingData(unitTag, combatCoord)
 
 end
 
-
+-- Required function to use the ChatHandler
 function Combat.GenerateChatData()
    -- d("called")
     local chatMessage = ""
@@ -251,11 +256,7 @@ function Combat.GenerateChatData()
     return chatMessage
 end
 
-
-
---- Processes the Combat related data of a chat message
--- @param message COMBAT-RELATED data - filter before calling this methode (has the form #code1#code2#code3#...)
---
+-- Required function to use the ChatHandler
 function Combat.ProcessChatData( unitTag, message )
    -- d("combatData")
     local start = 1
@@ -280,41 +281,30 @@ function Combat.ProcessChatData( unitTag, message )
     end
 
     for i,k in ipairs(codes) do
-
         codes[i] = RO.Chat.ProcessCode(k)
-
     end
    d(codes)
-
     -- Save the data in our combatData table
     combatData[unitTag] = codes
-
 end
 
-
-
+-- Collect all data to update the Damage/Healing display
 function Combat.DataForDisplay()
-
     local sortedDamage = CombatDataToSortedList(combatData, 1)
     local sortedHealing = CombatDataToSortedList(combatData, 2)
     local damageNames = {}
     local damageValues = {}
     local healingNames = {}
     local healingValues = {}
-
     for k,v in ipairs(sortedDamage) do
         table.insert(damageNames,v.name)
         table.insert(damageValues,v[1])
     end
-
     for k,v in ipairs(sortedHealing) do
         table.insert(healingNames,v.name)
         table.insert(healingValues,v[2])
     end
-
     return damageNames, damageValues, healingNames, healingValues
-
-
 end
 
 function Combat.DataString(i)
@@ -332,6 +322,7 @@ function Combat.PrintData( i )
     StartChatInput(Combat.DataString(i), CHAT_CHANNEL_PARTY, nil)
 end
 
+--============================================ EVENT HANDLING  =========================================================
 
 function Combat.OnPowerUpdate(eventCode, unitTag, powerIndex, powerType, powerValue, powerMax, powerEffectiveMax)
     -- filter only health updates
@@ -345,6 +336,7 @@ function Combat.OnPowerUpdate(eventCode, unitTag, powerIndex, powerType, powerVa
 end
 
 function Combat.OnCombatEvent(code, result, isError, abilityName, graphic, actionSlotType, sourceName, sourceType, targetName, targetType, hitValue, powerType, damageType,log,sourceUnitID, targetUnitID, abilityID)
+    --===== DAMAGE =========
     if (result == ACTION_RESULT_DAMAGE) or (result == ACTION_RESULT_CRITICAL_DAMAGE) or (result == ACTION_RESULT_DOT_TICK) or (result == ACTION_RESULT_DOT_TICK_CRITICAL) then
         if(sourceName == targetName) then return end
         if(realCombatData[1][abilityName] == nil) then
@@ -354,6 +346,7 @@ function Combat.OnCombatEvent(code, result, isError, abilityName, graphic, actio
         realCombatData[1][abilityName]:HandleCombat(hitValue)
     end
 
+    --==== HEALING ======
     if (result == ACTION_RESULT_HEAL) or (result == ACTION_RESULT_CRITICAL_HEAL) or (result == ACTION_RESULT_HOT_TICK) or (result == ACTION_RESULT_HOT_TICK_CRITICAL) then
         if(missingHealth[targetName] == nil) then
             return
@@ -367,15 +360,3 @@ function Combat.OnCombatEvent(code, result, isError, abilityName, graphic, actio
         realCombatData[2][abilityName]:HandleCombat(hitValue)
     end
 end
-
-
-
-
-
-function Combat.PrintBuffs(name, started, ending, slot, stack, iconFile, type, effecttype, abilityType,statusEffectType,abilityId, canClickOff, castByPlayer)
-    d(name .. ", " .. abilityType .. " , " .. (ending - GetGameTimeMilliseconds()/1000) .. " , " .. abilityId .. " , " .. statusEffectType .. " , " .. type)
-end
-
-
-
-

@@ -92,11 +92,9 @@ function Chat.GenerateCode(number)
     -- AFTERWARDS: resultTable contains number represenation to base (codeKey).
     -- Algorithm used analog to decimal number => binary number.
     while(number > 0) do
-
         -- initialize
         remainder = 0
         processed = 0
-
         -- divide by key, safe remainder and continue with the rest
         remainder = number % codeKey
         newNum = math.floor(number / codeKey)
@@ -104,16 +102,13 @@ function Chat.GenerateCode(number)
         local s = "Num: " .. number .. "\tR: " .. remainder .. "\tP:" .. processed
         --d(s)
         number = newNum
-
         --insert new element at the start of the list and add the local offset to it.
         table.insert(representationTable,remainder)
     end
-
     for i,v in ipairs(representationTable) do
         code = code .. string.char(v+offset)
         --d(code)
     end
-
     return code
 end
 
@@ -127,14 +122,11 @@ function Chat.ProcessCode( code )
     end
     --d(representationTable)
 
-
     for i,v in ipairs(representationTable) do
         num = num + v*(codeKey^(i-1))
     end
     --d(num)
-
     return num
-
 end
 
 -- Initializes the ChatHandler.

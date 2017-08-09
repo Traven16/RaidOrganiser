@@ -119,11 +119,9 @@ function Ping.OnCustomPing( tag , data)
     end
 end
 
---[[
-    Gets called when a MapPing happens.
- ]]
-function Ping.OnPing(event, etype, pingtype, playertag, offsetx, offsety, islocalplayerowner)
 
+-- Gets called when a MapPing happens.
+function Ping.OnPing(event, etype, pingtype, playertag, offsetx, offsety, islocalplayerowner)
     -- for some reason sometimes you get pings from unitTag: waypoint
     if(playertag == "waypoint") then return end
     -- ignore [0|0]
@@ -133,20 +131,27 @@ function Ping.OnPing(event, etype, pingtype, playertag, offsetx, offsety, isloca
         Ping.OnCustomPing(playertag, offsety * RO.PING_FACTOR_4)
         return
     end
+
+    -- We don't want to get wrong data when other players manually ping on the map.
+    -- In order to filter out only the pings send by this addon, we save for each player at what time his last legit
+    -- ping was sent. The next ping has to come around PING_DELAY ms later. There is some 'inaccuracy' with the
+    -- time between two pings, it will sometimes be less than whatever PING_DELAY we use.
     local time = GetGameTimeMilliseconds()
     local name = RO.UnitDisplayNameFromTag(playertag)
-
     cheatFilter[name] = cheatFilter[name] or 0
-    -- filter MapPings that happen outside of the normal Ping-Rate
+    -- stores the difference to the next expected Ping. We include a 30ms offset to make sure we won't filter out correct pings.
     local timediff = time - Ping.PING_DELAY - cheatFilter[name] + 30
     if(timediff  < 0 ) then
-        --d("error " .. name .. ": " .. timediff )
+        -- if the ping comes too early just ignore the ping
         return
     else
-        RO.DebugPrint("update")
+        -- if the ping was correct, store the time
         cheatFilter[name] = time
     end
 
+    -- Getting to this point means that the ping was "correct".
+
+    -- Even when we send only 4 decimal places, the coordinates we get from the Event might be a bit inaccurate and include a lot more decimal places
     local ultCoord = RO.round(offsetx,4)
     local combatCoord = RO.round(offsety,4)
 
