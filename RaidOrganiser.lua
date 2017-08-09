@@ -83,8 +83,15 @@ RO.defaultValues = {
             [30] = { ["id"] = 43093, ["name"] = "Soul Strike",},
         },
         added = {
-            icon = {},
-            id = {},},},
+            icon = {
+                "esoui/art/icons/ability_destructionstaff_013_a.dds",
+                "esoui/art/icons/ability_sorcerer_monsoon.dds",
+                "esoui/art/icons/ability_templar_rite_of_passage.dds",
+                "esoui/art/icons/ability_warden_006.dds",
+                "esoui/art/icons/ability_mageguild_005.dds",
+                "esoui/art/icons/ability_ava_003.dds",
+            },
+            id = {19,9,13,16,25,26,},},},
     UltimateUI = {
         Num = {
             Offset = {1020,554},},
@@ -94,8 +101,7 @@ RO.defaultValues = {
         Hide = false,},
     Combat = {
         Offset = {1620, 144 },
-        LocalHide = false,
-        GlobalHide = false,},
+        LocalHide = false,},
     UltUI = {
         ultTextures = {
             [1] = "esoui/art/icons/ability_destructionstaff_013_a.dds",

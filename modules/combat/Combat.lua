@@ -77,12 +77,7 @@ end
 
 function Combat.ToggleDamageVisLocal()
     Save.LocalHide = not Save.LocalHide
-    RO_Combat:SetHidden( (Save.LocalHide and Save.GlobalHide))
-end
-
-function Combat.ToggleDamageVisGlobal()
-    Save.GlobalHide = not Save.GlobalHide
-    RO_Combat:SetHidden( (Save.LocalHide and Save.GlobalHide))
+    RO_Combat:SetHidden( Save.LocalHide)
 end
 
 function Combat.Num(table)

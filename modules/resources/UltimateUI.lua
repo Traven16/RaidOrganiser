@@ -199,7 +199,7 @@ function UltUI.Init()
     table.insert(labels,RO_Ultimate4)
     table.insert(labels,RO_Ultimate5)
     table.insert(labels,RO_Ultimate6)
-    notifier = RO.UI.UltimateNotifier(RO.name.."Notifier", RO_UltNumber, {250,0}, RO.SavedVars.UltUI.ultTextures[1])
+
     UltUI.restorePos()
     UltUI.InitUltimateBars()
     SetupUltimateUI()

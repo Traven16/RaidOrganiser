@@ -107,6 +107,10 @@ function Ultimate.ProcessPingData(playertag, ultCoord)
     --d("process")
     local time = GetTimeStamp()
     local id, pct = RO.Ping.SplitDecimal_4( ultCoord )
+    if(id > #Save.ultimates or id < 1) then
+        return
+    end
+
     local label = RO.UltUI.inv[GetAbilityIcon(Save.ultimates[id].id)] or 0
     pct = RO.Ping.RealPct(pct)
 
