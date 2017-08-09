@@ -246,7 +246,6 @@ function UI.UltimateNotifier(name, parent, offset, texture)
 
 end
 
-
 function RO.d()
     d(1)
 end

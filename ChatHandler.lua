@@ -22,7 +22,6 @@ local identifierSymbol = string.char(identifierNum)
 local prefix = "S###"
 -- used for special chat commands that will not get interpreted as a message but as a request and call a function
 local specialPrefix = "S#??"
-
 -- Variables for Code Generation
 local codeKey = 70
 local offset = 40

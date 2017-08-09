@@ -325,10 +325,13 @@ end
 --============================================ EVENT HANDLING  =========================================================
 
 function Combat.OnPowerUpdate(eventCode, unitTag, powerIndex, powerType, powerValue, powerMax, powerEffectiveMax)
+    local time = GetGameTimeMilliseconds()
     -- filter only health updates
     if(powerType == POWERTYPE_HEALTH) then
+
         if(unitTag:sub(1,5) == "group") then
             missingHealth[GetRawUnitName(unitTag)] = powerMax - powerValue
+            d( time .. ": " .. unitTag .. ", " .. powerValue .. ", " .. powerMax )
             --d(missingHealth)
             --RO.Player.list[GetRawUnitName(unitTag)].missingHealth = powerMax - powerValue
         end

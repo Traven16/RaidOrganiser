@@ -3,7 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="51393ed8-33c6-4db6-9e40-77d7bef5e17a" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ChatHandler.lua" afterPath="$PROJECT_DIR$/ChatHandler.lua" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/PingHandler.lua" afterPath="$PROJECT_DIR$/PingHandler.lua" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Player.lua" afterPath="$PROJECT_DIR$/Player.lua" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/UI_Tools.lua" afterPath="$PROJECT_DIR$/UI_Tools.lua" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/combat/Combat.lua" afterPath="$PROJECT_DIR$/modules/combat/Combat.lua" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -33,8 +34,8 @@
       <file leaf-file-name="UI_Tools.lua" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/UI_Tools.lua">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="5525">
-              <caret line="561" column="3" lean-forward="false" selection-start-line="561" selection-start-column="3" selection-end-line="561" selection-end-column="3" />
+            <state relative-caret-position="272">
+              <caret line="252" column="4" lean-forward="true" selection-start-line="252" selection-start-column="4" selection-end-line="252" selection-end-column="4" />
               <folding />
             </state>
           </provider>
@@ -43,8 +44,8 @@
       <file leaf-file-name="ChatHandler.lua" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ChatHandler.lua">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1309">
-              <caret line="70" column="0" lean-forward="true" selection-start-line="70" selection-start-column="0" selection-end-line="70" selection-end-column="0" />
+            <state relative-caret-position="204">
+              <caret line="30" column="32" lean-forward="true" selection-start-line="30" selection-start-column="32" selection-end-line="30" selection-end-column="32" />
               <folding />
             </state>
           </provider>
@@ -53,8 +54,8 @@
       <file leaf-file-name="Combat.lua" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/modules/combat/Combat.lua">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="796">
-              <caret line="282" column="31" lean-forward="false" selection-start-line="282" selection-start-column="31" selection-end-line="282" selection-end-column="31" />
+            <state relative-caret-position="201">
+              <caret line="329" column="34" lean-forward="false" selection-start-line="329" selection-start-column="20" selection-end-line="329" selection-end-column="34" />
               <folding />
             </state>
           </provider>
@@ -63,8 +64,8 @@
       <file leaf-file-name="Player.lua" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Player.lua">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="323">
-              <caret line="25" column="21" lean-forward="false" selection-start-line="25" selection-start-column="21" selection-end-line="25" selection-end-column="21" />
+            <state relative-caret-position="561">
+              <caret line="51" column="7" lean-forward="true" selection-start-line="51" selection-start-column="7" selection-end-line="51" selection-end-column="7" />
               <folding />
             </state>
           </provider>
@@ -185,14 +186,14 @@
         <option value="$PROJECT_DIR$/RaidOrganiser.txt" />
         <option value="$PROJECT_DIR$/Settings.lua" />
         <option value="$PROJECT_DIR$/RaidOrganiserUltimates.xml" />
-        <option value="$PROJECT_DIR$/Player.lua" />
-        <option value="$PROJECT_DIR$/UI_Tools.lua" />
         <option value="$PROJECT_DIR$/RaidOrganiser.lua" />
         <option value="$PROJECT_DIR$/modules/resources/Ultimate.lua" />
         <option value="$PROJECT_DIR$/modules/resources/UltimateUI.lua" />
-        <option value="$PROJECT_DIR$/ChatHandler.lua" />
         <option value="$PROJECT_DIR$/PingHandler.lua" />
         <option value="$PROJECT_DIR$/modules/combat/Combat.lua" />
+        <option value="$PROJECT_DIR$/ChatHandler.lua" />
+        <option value="$PROJECT_DIR$/UI_Tools.lua" />
+        <option value="$PROJECT_DIR$/Player.lua" />
       </list>
     </option>
   </component>
@@ -674,7 +675,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="6" />
+      <option name="time" value="7" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -862,14 +863,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/UI_Tools.lua">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5525">
-          <caret line="561" column="3" lean-forward="false" selection-start-line="561" selection-start-column="3" selection-end-line="561" selection-end-column="3" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/modules/resources/Ultimate.lua">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1497">
@@ -902,26 +895,34 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/modules/combat/Combat.lua">
+    <entry file="file://$PROJECT_DIR$/UI_Tools.lua">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="796">
-          <caret line="282" column="31" lean-forward="false" selection-start-line="282" selection-start-column="31" selection-end-line="282" selection-end-column="31" />
+        <state relative-caret-position="272">
+          <caret line="252" column="4" lean-forward="true" selection-start-line="252" selection-start-column="4" selection-end-line="252" selection-end-column="4" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ChatHandler.lua">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1309">
-          <caret line="70" column="0" lean-forward="true" selection-start-line="70" selection-start-column="0" selection-end-line="70" selection-end-column="0" />
+        <state relative-caret-position="204">
+          <caret line="30" column="32" lean-forward="true" selection-start-line="30" selection-start-column="32" selection-end-line="30" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/combat/Combat.lua">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="201">
+          <caret line="329" column="34" lean-forward="false" selection-start-line="329" selection-start-column="20" selection-end-line="329" selection-end-column="34" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Player.lua">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="25" column="21" lean-forward="false" selection-start-line="25" selection-start-column="21" selection-end-line="25" selection-end-column="21" />
+        <state relative-caret-position="561">
+          <caret line="51" column="7" lean-forward="true" selection-start-line="51" selection-start-column="7" selection-end-line="51" selection-end-column="7" />
           <folding />
         </state>
       </provider>
