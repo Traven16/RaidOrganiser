@@ -12,6 +12,7 @@ Player.list = {}
 
 --========================================== LOCAL VARIABLES ===========================================================
 
+local DESYNC_TIMER = 20000
 
 --========================================== LOCAL FUNCTIONS ===========================================================
 
@@ -27,35 +28,50 @@ function Player.New(tag)
             ultPct = 0,
             dmg = 0,
             heal = {},
-            pingtime = 0
-        },
+            pingtime = 0},
         health = {
             max = nil,
             current = nil,
             desyncMax = nil,
             recentMax = nil,
+            time = nil,},
+        combat = {
+            damage = RO.Combat.NewCombat(),
+            healing = RO.Combat.NewCombat(),
         },
+        UpdateHealth = function(self, powerValue)
+            self.health.time = GetGameTimeMilliseconds()
+            self.health.current = powerValue
+            self.recentMax = math.max(self.health.recentMax, powerValue)
+            -- if new health is higher than what we assume
+            self.desyncMax = math.max(self.health.desyncMax, powerValue)
+        end
     }
     local current, max, _ = GetPowerType(tag,POWERTYPE_HEALTH)
-
     player.health.max = max
     player.health.current = current
     player.health.desyncMax = max
     player.health.recentMax = current
-
+    return player
 end
 
-function Player.SetDesync()
+function Player.UpdateDesynch()
     for key, player in pairs(Player.list) do
         player.health.desyncMax = player.health.recentMax
         player.health.recentMax = player.health.current
     end
 
+    zo_callLater(Player.UpdateDesynch(),DESYNC_TIMER)
+end
 
-
-
-
-
+--TODO: Remove this and update function in Combat
+function Combat.OnPowerUpdate(eventCode, unitTag, powerIndex, powerType, powerValue, powerMax, powerEffectiveMax)
+    local time = GetGameTimeMilliseconds()
+    -- filter only health updates
+    if(powerType == POWERTYPE_HEALTH) then
+        local name = GetRawUnitName(unitTag)
+        Player.list[name]:UpdateHealth(powerValue)
+    end
 end
 
 function Player.Init()
