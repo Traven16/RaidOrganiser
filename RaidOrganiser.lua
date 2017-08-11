@@ -7,6 +7,7 @@ RO.version = 19
 
 RO.MODE_ULTIMATE_PING = 0
 RO.MODE_DAMAGE_PING = 1
+RO.Player = {}
 
 local notifyOnGroupChange = {}
 local notifyOnMapPing = {}
@@ -24,7 +25,7 @@ local dummies = {}
 local dummyCap = 21
 local ultimates = {}
 -- Timer for refreshing the UI
-local REFRESH_UI_TIMER = 200
+local REFRESH_UI_TIMER = 5000
 
 --============================================ SAVED VARIABLES =========================================================
 RO.defaultValues = {
@@ -225,6 +226,7 @@ end
 
 -- Initialise everything
 function RO.Init()
+
     RO.SavedVars = ZO_SavedVars:NewAccountWide("RaidOrganiser_SavedVars", RO.version, "global", RO.defaultValues)
     EVENT_MANAGER:UnregisterForEvent(EVENT_ADD_ON_LOADED)
 
@@ -232,10 +234,11 @@ function RO.Init()
     RO.UltUI.Init()
     RO.Ultimate.Init()
     RO.Combat.Init()
-    RO.Resources.Init()
-    RO.ResUI.Init()
+    --RO.Resources.Init()
+    --RO.ResUI.Init()
     RO.Ping.Init()
     RO.Chat.Init()
+    RO.Player.Init()
     for i = 0, dummyCap do
         dummies[i] = RO.NewDummy(i)
     end

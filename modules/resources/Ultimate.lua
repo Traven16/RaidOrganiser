@@ -88,9 +88,10 @@ end
 
 function Ultimate.GetData()
     local ultimateData = {}
-    for name,player in pairs(RO.Player.list) do
-        ultimateData[name] = player.ultimate
+    for tag,player in pairs(RO.Player.tag) do
+        ultimateData[tag] = player.ultimate
     end
+
     return ultimateData
 
 end
@@ -119,9 +120,9 @@ function Ultimate.ProcessPingData(playertag, ultCoord)
 
     local label = RO.UltUI.inv[GetAbilityIcon(Save.ultimates[id].id)] or 0
     pct = RO.Ping.RealPct(pct)
+    --d(id .. "," .. label)
 
-    local name = GetRawUnitName(playertag)
-    RO.Player.list[name]:UpdateUltimate(label,pct)
+    RO.Player.tag[playertag]:UpdateUltimate(label,pct)
 --[[
     if ( ultimateData[playertag] == nil) then ultimateData[playertag] = {time = nil, pct = nil, number = nil, ultimate = nil, uptime = nil} end
     local uptime = ultimateData[playertag].uptime

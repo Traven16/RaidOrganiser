@@ -28,9 +28,9 @@ local function ToSortedLabelList(ultimateData)
         k = k+1
         local label
         -- don't show data if it's from a dead player or more than 5 seconds old
-        if GetTimeStamp() - v.time  < 5 and not RO.IsUnitDeadOrReincarnating(tag) then
-            local arg = {tag = tag, pct = v.pct, number = v.number, ultimate = v.ultimate, uptime = v.uptime }
-            local label = v.ultimate
+        if GetGameTimeMilliseconds() - v.time  < 5000 and not RO.IsUnitDeadOrReincarnating(tag) then
+            local arg = {tag = tag, pct = v.pct, number = v.number, label = v.label, uptime = v.uptime }
+            local label = v.label
             --d(label)
             if(label ~= nil) then
                 if(sortedList[label] == nil) then sortedList[label] = {} end
@@ -57,7 +57,7 @@ local function ToSortedLabelList(ultimateData)
                 end
             end)
     end
-
+    d(sortedList)
     return sortedList
 end
 
@@ -68,6 +68,7 @@ end
 local function FillUltimateBar( ultBar , arg)
     ultBar:SetHidden(false)
     ultBar:SetValue(arg.pct)
+    d(arg)
     ultBar:SetName(RO.UnitDisplayNameFromTag(arg.tag))
 
 end
@@ -89,7 +90,7 @@ local function DisplayUltimateBars( sortedList )
                     plus = true
                     count = count + 1
                 end
-                if(AreUnitsEqual("player", sortedList[k][i].tag)) then
+                if(GetUnitName("player") == sortedList[k][i].tag) then
                     if(RO.SavedVars.Settings.showNumber) then
                         if(plus) then
                             RO_UltNumber1:SetText("|c00ff00 #" .. i .. "|r")

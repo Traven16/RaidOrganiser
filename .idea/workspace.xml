@@ -4,7 +4,11 @@
     <list default="true" id="51393ed8-33c6-4db6-9e40-77d7bef5e17a" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Player.lua" afterPath="$PROJECT_DIR$/Player.lua" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/RaidOrganiser.lua" afterPath="$PROJECT_DIR$/RaidOrganiser.lua" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/RaidOrganiser.txt" afterPath="$PROJECT_DIR$/RaidOrganiser.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/combat/Combat.lua" afterPath="$PROJECT_DIR$/modules/combat/Combat.lua" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/resources/Ultimate.lua" afterPath="$PROJECT_DIR$/modules/resources/Ultimate.lua" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/resources/UltimateUI.lua" afterPath="$PROJECT_DIR$/modules/resources/UltimateUI.lua" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -20,11 +24,21 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="RaidOrganiser.lua" pinned="false" current-in-tab="false">
+      <file leaf-file-name="RaidOrganiser.lua" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/RaidOrganiser.lua">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="5253">
-              <caret line="309" column="0" lean-forward="false" selection-start-line="309" selection-start-column="0" selection-end-line="309" selection-end-column="0" />
+            <state relative-caret-position="266">
+              <caret line="198" column="44" lean-forward="false" selection-start-line="198" selection-start-column="44" selection-end-line="198" selection-end-column="44" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Combat.lua" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/modules/combat/Combat.lua">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="692">
+              <caret line="451" column="32" lean-forward="true" selection-start-line="451" selection-start-column="32" selection-end-line="451" selection-end-column="32" />
               <folding />
             </state>
           </provider>
@@ -45,28 +59,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="527">
               <caret line="31" column="0" lean-forward="false" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
-              <folding>
-                <marker date="1502255008113" expanded="true" signature="7508:7521" ph="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Combat.lua" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/modules/combat/Combat.lua">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1009">
-              <caret line="257" column="0" lean-forward="false" selection-start-line="257" selection-start-column="0" selection-end-line="257" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Player.lua" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/Player.lua">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="238">
-              <caret line="31" column="20" lean-forward="true" selection-start-line="31" selection-start-column="20" selection-end-line="31" selection-end-column="20" />
               <folding />
             </state>
           </provider>
@@ -85,8 +77,18 @@
       <file leaf-file-name="Ultimate.lua" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/modules/resources/Ultimate.lua">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="459">
-              <caret line="93" column="23" lean-forward="false" selection-start-line="93" selection-start-column="23" selection-end-line="93" selection-end-column="23" />
+            <state relative-caret-position="-84">
+              <caret line="91" column="43" lean-forward="true" selection-start-line="91" selection-start-column="43" selection-end-line="91" selection-end-column="43" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="RaidOrganiser.txt" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/RaidOrganiser.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="221">
+              <caret line="13" column="10" lean-forward="true" selection-start-line="13" selection-start-column="10" selection-end-line="13" selection-end-column="10" />
               <folding />
             </state>
           </provider>
@@ -95,8 +97,8 @@
       <file leaf-file-name="UltimateUI.lua" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/modules/resources/UltimateUI.lua">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="725">
-              <caret line="211" column="60" lean-forward="false" selection-start-line="211" selection-start-column="60" selection-end-line="211" selection-end-column="60" />
+            <state relative-caret-position="869">
+              <caret line="70" column="9" lean-forward="false" selection-start-line="70" selection-start-column="9" selection-end-line="70" selection-end-column="9" />
               <folding />
             </state>
           </provider>
@@ -126,11 +128,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>UltUI.ultTextures</find>
-      <find>test</find>
-      <find>ro.debug</find>
-      <find>isunit</find>
-      <find>isunitdead</find>
       <find>ultimateCost</find>
       <find>ultcost</find>
       <find>dummy</find>
@@ -156,9 +153,15 @@
       <find>iconl</find>
       <find>local func</find>
       <find>initult</find>
+      <find>ultimate</find>
+      <find>RO.Ping</find>
+      <find>getunit</find>
+      <find>RO.Get</find>
+      <find>GetRawUnitName</find>
     </findStrings>
     <replaceStrings>
       <replace>RO.SavedVars.UltUI.ultTextures</replace>
+      <replace>GetUnitName</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -184,17 +187,17 @@
         <option value="$PROJECT_DIR$/modules/resources/ResourceUI.lua" />
         <option value="$PROJECT_DIR$/UltPrototpye.lua" />
         <option value="$PROJECT_DIR$/UltList.lua" />
-        <option value="$PROJECT_DIR$/RaidOrganiser.txt" />
         <option value="$PROJECT_DIR$/Settings.lua" />
         <option value="$PROJECT_DIR$/RaidOrganiserUltimates.xml" />
-        <option value="$PROJECT_DIR$/RaidOrganiser.lua" />
         <option value="$PROJECT_DIR$/PingHandler.lua" />
-        <option value="$PROJECT_DIR$/modules/combat/Combat.lua" />
         <option value="$PROJECT_DIR$/ChatHandler.lua" />
         <option value="$PROJECT_DIR$/UI_Tools.lua" />
+        <option value="$PROJECT_DIR$/RaidOrganiser.txt" />
         <option value="$PROJECT_DIR$/Player.lua" />
-        <option value="$PROJECT_DIR$/modules/resources/UltimateUI.lua" />
+        <option value="$PROJECT_DIR$/RaidOrganiser.lua" />
         <option value="$PROJECT_DIR$/modules/resources/Ultimate.lua" />
+        <option value="$PROJECT_DIR$/modules/resources/UltimateUI.lua" />
+        <option value="$PROJECT_DIR$/modules/combat/Combat.lua" />
       </list>
     </option>
   </component>
@@ -246,10 +249,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="modules" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="resources" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -807,51 +806,10 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Settings.lua" />
-    <entry file="file://$PROJECT_DIR$/RaidOrganiser.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="9" column="26" lean-forward="false" selection-start-line="9" selection-start-column="26" selection-end-line="9" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/UltList.lua">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="136">
           <caret line="8" column="0" lean-forward="false" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/RaidOrganiser.lua">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5253">
-          <caret line="309" column="0" lean-forward="false" selection-start-line="309" selection-start-column="0" selection-end-line="309" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/PingHandler.lua">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2499">
-          <caret line="147" column="21" lean-forward="false" selection-start-line="147" selection-start-column="21" selection-end-line="147" selection-end-column="21" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/UI_Tools.lua">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4335">
-          <caret line="255" column="4" lean-forward="false" selection-start-line="255" selection-start-column="4" selection-end-line="255" selection-end-column="4" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ChatHandler.lua">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="527">
-          <caret line="31" column="0" lean-forward="false" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
-          <folding>
-            <marker date="1502255008113" expanded="true" signature="7508:7521" ph="..." />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -865,34 +823,74 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/modules/combat/Combat.lua">
+    <entry file="file://$PROJECT_DIR$/UI_Tools.lua">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1009">
-          <caret line="257" column="0" lean-forward="false" selection-start-line="257" selection-start-column="0" selection-end-line="257" selection-end-column="0" />
+        <state relative-caret-position="4335">
+          <caret line="255" column="4" lean-forward="false" selection-start-line="255" selection-start-column="4" selection-end-line="255" selection-end-column="4" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/modules/resources/UltimateUI.lua">
+    <entry file="file://$PROJECT_DIR$/PingHandler.lua">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="725">
-          <caret line="211" column="60" lean-forward="false" selection-start-line="211" selection-start-column="60" selection-end-line="211" selection-end-column="60" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/modules/resources/Ultimate.lua">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="459">
-          <caret line="93" column="23" lean-forward="false" selection-start-line="93" selection-start-column="23" selection-end-line="93" selection-end-column="23" />
+        <state relative-caret-position="2499">
+          <caret line="147" column="21" lean-forward="false" selection-start-line="147" selection-start-column="21" selection-end-line="147" selection-end-column="21" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Player.lua">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="31" column="20" lean-forward="true" selection-start-line="31" selection-start-column="20" selection-end-line="31" selection-end-column="20" />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ChatHandler.lua">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="527">
+          <caret line="31" column="0" lean-forward="false" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/RaidOrganiser.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="13" column="10" lean-forward="true" selection-start-line="13" selection-start-column="10" selection-end-line="13" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/resources/UltimateUI.lua">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="869">
+          <caret line="70" column="9" lean-forward="false" selection-start-line="70" selection-start-column="9" selection-end-line="70" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/resources/Ultimate.lua">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-84">
+          <caret line="91" column="43" lean-forward="true" selection-start-line="91" selection-start-column="43" selection-end-line="91" selection-end-column="43" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/combat/Combat.lua">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="692">
+          <caret line="451" column="32" lean-forward="true" selection-start-line="451" selection-start-column="32" selection-end-line="451" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/RaidOrganiser.lua">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="266">
+          <caret line="198" column="44" lean-forward="false" selection-start-line="198" selection-start-column="44" selection-end-line="198" selection-end-column="44" />
           <folding />
         </state>
       </provider>
