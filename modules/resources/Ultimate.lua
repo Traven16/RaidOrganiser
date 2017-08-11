@@ -40,7 +40,8 @@ function Ultimate.IconLinkToId(link)
     end
 end
 
--- Find all Ultimates and their IDs. Currently only the highest rank of each Ultimate gets saved.
+-- Find all Ultimates and their IDs. Currently only the highest rank of each Ultimate gets saved. Currently not used for anything. Might aswell keep it tho
+-- incase it might be useful later.
 -- >> I stole most of this functions code from sirinsidiator's sidTools <<
 function Ultimate.FindAllUltimateIds()
     local ultimates = {}
@@ -86,7 +87,12 @@ end
 
 
 function Ultimate.GetData()
+    local ultimateData = {}
+    for name,player in pairs(RO.Player.list) do
+        ultimateData[name] = player.ultimate
+    end
     return ultimateData
+
 end
 
 function Ultimate.GeneratePingDataDummy(ult,current)
@@ -114,6 +120,9 @@ function Ultimate.ProcessPingData(playertag, ultCoord)
     local label = RO.UltUI.inv[GetAbilityIcon(Save.ultimates[id].id)] or 0
     pct = RO.Ping.RealPct(pct)
 
+    local name = GetRawUnitName(playertag)
+    RO.Player.list[name]:UpdateUltimate(label,pct)
+--[[
     if ( ultimateData[playertag] == nil) then ultimateData[playertag] = {time = nil, pct = nil, number = nil, ultimate = nil, uptime = nil} end
     local uptime = ultimateData[playertag].uptime
 
@@ -122,6 +131,7 @@ function Ultimate.ProcessPingData(playertag, ultCoord)
     if(ultimateData[playertag].uptime == nil) then
         --d("WRONG UPTIME")
     end
+    --]]
 end
 
 -- This gets called only if powerType == POWERTYPE_ULTIMATE

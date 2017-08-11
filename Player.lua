@@ -24,11 +24,17 @@ function Player.New(tag)
         attribut = {
             unitTag = tag,
             missingHealth = 0,
-            ultId = 0,
+            ultLabel = 0,
             ultPct = 0,
             dmg = 0,
             heal = {},
             pingtime = 0},
+        ultimate = {
+            label = 0,
+            pct = 0,
+            time = 0,
+            uptime = nil,
+        },
         health = {
             max = nil,
             current = nil,
@@ -45,6 +51,16 @@ function Player.New(tag)
             self.recentMax = math.max(self.health.recentMax, powerValue)
             -- if new health is higher than what we assume
             self.desyncMax = math.max(self.health.desyncMax, powerValue)
+        end,
+        UpdateUltimate = function(self,label,pct)
+            self.ultimate.label = label
+            self.ultimate.pct = pct
+            self.ultimate.time = GetGameTimeMilliseconds()
+            self.ultimate.uptime = pct >= 100
+                                    and (self.ultimate.uptime ~= nil
+                                        or self.ultimate.time)
+                                    or nil
+
         end
     }
     local current, max, _ = GetPowerType(tag,POWERTYPE_HEALTH)
