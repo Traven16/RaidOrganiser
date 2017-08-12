@@ -10,11 +10,11 @@ UltUI.inv = {}
 --========================================== LOCAL VARIABLES ===========================================================
 local Save
 local Move = false
-local labelAmount = 6
 local ultimateBars = {}
 local maxTrackSize = 12
 local labels = {}
 local notifier = {}
+local icons = {}
 --========================================== LOCAL FUNCTIONS ===========================================================
 --- Transform ultimateData to sortedList
 -- @param ultimateData handed from Ultimate
@@ -41,7 +41,7 @@ local function ToSortedLabelList(ultimateData)
 
     -- SORT each sublist
     -- AFTERWARDS: sortedList[i] is SORTED by primarily pct and secondarily number
-    for i=1, labelAmount do
+    for i=1, Save.labelAmount do
         -- if no ultimate to display for current label, set it to be an empty list to avoid issues with trying to iterate over nil
         if(sortedList[i] == nil) then sortedList[i] = {} end
         table.sort(sortedList[i],
@@ -57,7 +57,6 @@ local function ToSortedLabelList(ultimateData)
                 end
             end)
     end
-    d(sortedList)
     return sortedList
 end
 
@@ -68,7 +67,6 @@ end
 local function FillUltimateBar( ultBar , arg)
     ultBar:SetHidden(false)
     ultBar:SetValue(arg.pct)
-    d(arg)
     ultBar:SetName(RO.UnitDisplayNameFromTag(arg.tag))
 
 end
@@ -80,7 +78,7 @@ end
 local function DisplayUltimateBars( sortedList )
 
     local s = "|cff0000"
-    for k = 1, labelAmount do
+    for k = 1, Save.labelAmount do
         local plus = false
         local count = 0
         local length = #sortedList[k]
@@ -106,14 +104,7 @@ local function DisplayUltimateBars( sortedList )
             else
                 ultimateBars[k][i]:SetHidden(true)
             end
-
-        end
-        if count > 0 and RO.SavedVars.Settings.showCharged then
-            labels[k]:SetText("      |c00ff00"  .. count .. "|r")
-
-        else
-            labels[k]:SetText("")
-            if RO.SavedVars.Settings.notify[k] then
+            if count == 0 and RO.SavedVars.Settings.notify[k] then
                 s = s .. string.upper(GetAbilityName(RO.SavedVars.Ultimate.ultimates[RO.SavedVars.Ultimate.added.id[k]].id) .. "\n")
             end
         end
@@ -161,9 +152,15 @@ end
 
 function UltUI.InitUltimateBars()
     for k = 1,#labels do
+        icons[k] = RO.UI.Texture("RO_UltimateIcon"..k, labels[k], {(8) / 2,0}, RO.SavedVars.Ultimate.added.icon[k], {RO.UI.UltBarSet.dimX-8, 32})
+        icons[k]:SetHidden((k > Save.labelAmount))
+
         ultimateBars[k] = {}
         for i = 1, maxTrackSize do
+            labels[k]:ClearAnchors()
+            labels[k]:SetAnchor(TOPLEFT, RO_Ultimate, TOPLEFT, (k-1)*(RO.UI.UltBarSet.dimX+5), 0)
             ultimateBars[k][i] = RO.UI.UltimateBar("UltimateBar"..k..","..i, labels[k], {0, (RO.UI.UltBarSet.dimY+1)* (i+0.6)}, "", RO.SavedVars.Ultimate.added.icon[k] )
+            ultimateBars[k][i]:SetHidden(true)
         end
     end
     UltUI.inv = RO.Inverse(RO.SavedVars.Ultimate.added.icon)

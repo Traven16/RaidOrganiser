@@ -379,7 +379,7 @@ Player.tag = {}
 
 --========================================== LOCAL VARIABLES ===========================================================
 
-local DESYNC_TIMER = 20000
+local DESYNC_TIMER = 7000
 
 --========================================== LOCAL FUNCTIONS ===========================================================
 
@@ -390,9 +390,6 @@ function Player.New(tag)
     local player = {
         attribut = {
             unitTag = tag,
-            missingHealth = 0,
-            ultLabel = 0,
-            ultPct = 0,
             dmg = 0,
             heal = {},
             pingtime = 0},
@@ -407,7 +404,8 @@ function Player.New(tag)
             current = nil,
             desyncMax = nil,
             recentMax = nil,
-            time = nil,},
+            time = nil,
+            desyncTime = 0},
         combat = {
             damage = RO.Combat.NewCombat(),
             healing = RO.Combat.NewCombat(),
@@ -415,9 +413,16 @@ function Player.New(tag)
         UpdateHealth = function(self, powerValue)
             self.health.time = GetGameTimeMilliseconds()
             self.health.current = powerValue
-            self.recentMax = math.max(self.health.recentMax, powerValue)
+            self.health.recentMax = math.max(self.health.recentMax, powerValue)
             -- if new health is higher than what we assume
-            self.desyncMax = math.max(self.health.desyncMax, powerValue)
+            self.health.desyncMax = math.max(self.health.desyncMax, powerValue)
+            if(self.health.time - self.health.desyncTime > DESYNC_TIMER) then
+                self.health.desyncMax = self.health.recentMax
+                self.health.recentMax = self.health.current
+                self.health.desyncTime = self.health.time
+            end
+
+
         end,
         UpdateUltimate = function(self,label,pct)
             self.ultimate.label = label
@@ -425,7 +430,8 @@ function Player.New(tag)
             self.ultimate.time = GetGameTimeMilliseconds()
             self.ultimate.uptime = pct >= 100
                     and (self.ultimate.uptime ~= nil
-                    or self.ultimate.time)
+                        and self.ultimate.uptime
+                        or self.ultimate.time)
                     or nil
 
         end
@@ -438,24 +444,18 @@ function Player.New(tag)
     return player
 end
 
-function Player.UpdateDesynch()
-    for key, player in pairs(Player.list) do
-        player.health.desyncMax = player.health.recentMax
-        player.health.recentMax = player.health.current
-    end
 
-    zo_callLater(Player.UpdateDesynch(),DESYNC_TIMER)
-end
 
 --TODO: Remove this and update function in Combat
 function Combat.OnPowerUpdate(eventCode, unitTag, powerIndex, powerType, powerValue, powerMax, powerEffectiveMax)
-    if(unitTag == "player") then
+    if(not (unitTag:sub(1,5) == "group")) then
         return
     end
+    --d(unitTag)
+
     local time = GetGameTimeMilliseconds()
     -- filter only health updates
     if(powerType == POWERTYPE_HEALTH) then
-d(unitTag)
         Player.tag[unitTag]:UpdateHealth(powerValue)
     end
 end
@@ -468,6 +468,7 @@ function Player.Init()
         Player.list[name] = Player.New(tag)
         Player.tag[tag] = Player.list[name]
     end
+    --Player.UpdateDesynch()
 
 end
 

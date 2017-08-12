@@ -25,7 +25,7 @@ local dummies = {}
 local dummyCap = 21
 local ultimates = {}
 -- Timer for refreshing the UI
-local REFRESH_UI_TIMER = 5000
+local REFRESH_UI_TIMER = 200
 
 --============================================ SAVED VARIABLES =========================================================
 RO.defaultValues = {
@@ -94,6 +94,7 @@ RO.defaultValues = {
             },
             id = {19,9,13,16,25,26,},},},
     UltimateUI = {
+        labelAmount = 6,
         Num = {
             Offset = {1020,554},},
         Offset = {683,725},},
@@ -253,11 +254,12 @@ function RO.UIHandler()
             dummies[i]:SendPing()
         end
     end
-
     -- update UI Elements
     for i,v in pairs(RO.ui) do
         v.UpdateUI()
     end
+
+    RO_UltNotify1:SetText((RO.Player.list["Fel's Sister"].health.max) .. "\n" .. (RO.Player.list["Fel's Sister"].health.recentMax) .. "\n" .. (RO.Player.list["Fel's Sister"].health.desyncMax) .. "\n")
     -- repeat later
     zo_callLater(RO.UIHandler, REFRESH_UI_TIMER)
 end

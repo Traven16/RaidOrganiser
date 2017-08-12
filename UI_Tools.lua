@@ -9,15 +9,14 @@ UI.ResourceBarSettings = {
 }
 
 UI.UltBarSet = {
-    dimX = 105,
-    dimY = 25,
+    dimX = 50,
+    dimY = 22,
     iconW = 25,
     iconH = 25,
     threshold = 0,
 }
 
 UI.UltNotifier = {
-
     iconW = 50,
     iconH = 50,
     dimX = 100,
@@ -25,22 +24,16 @@ UI.UltNotifier = {
 }
 
 UI.DmgSet = {
-
     nameW = 35,
     dmgW = 70,
     cellHeight = 19
-
-
-
 }
-
-
 
 UI.resourceColors = {
     magicka = {0.15, 0.45, 1 ,0.5},
     stamina = {0,1,0,0.25},
-    ultimateUp = {0.2,1,0,0.5 },
-    ultimate = {1,1,1,0.5}
+    ultimateUp = {0,1,0,0.4 },
+    ultimate = {1,0,0,0.4}
 }
 
 local function printSortedListToString(table)
@@ -53,24 +46,6 @@ local function printSortedListToString(table)
     return string
 end
 
-local function Texture (name, parent, offset, file, size)
-    if(name == nil or name == "") then return end
-
-    local texture = _G[name]
-    if ( texture == nil ) then texture = WINDOW_MANAGER:CreateControl( name , parent , CT_TEXTURE ) end
-
-    texture:SetWidth(size[1])
-    texture:SetHeight(size[2])
-    texture:ClearAnchors()
-    texture:SetAnchor( TOPLEFT, parent, TOPLEFT, offset[1], offset[2] )
-    texture:SetHidden(false)
-    texture:SetTexture(file)
-
-
-    return texture
-
-
-end
 
 local function Backdrop ( name, parent, offset, size, edgecolor, centercolor)
     if(name == nil or name == "") then return end
@@ -86,11 +61,7 @@ local function Backdrop ( name, parent, offset, size, edgecolor, centercolor)
     back:SetEdgeColor(unpack(edgecolor))
     back:SetCenterColor(unpack(centercolor))
 
-
-
-
     return back
-
 end
 
 local function Statusbar (name, parent, color, offset, size )
@@ -138,7 +109,32 @@ local function Label (name, parent, text, offset, anchor)
 
 end
 
+function UI.Texture (name, parent, offset, file, size)
+    if(name == nil or name == "") then return end
 
+    local texture = _G[name]
+    if ( texture == nil ) then texture = WINDOW_MANAGER:CreateControl( name , parent , CT_TEXTURE ) end
+
+    texture:SetWidth(size[1])
+    texture:SetHeight(size[2])
+    texture:ClearAnchors()
+    texture:SetAnchor( TOPLEFT, parent, TOPLEFT, offset[1], offset[2] )
+    texture:SetHidden(false)
+    texture:SetTexture(file)
+    texture:SetColor(1,1,1,0.7)
+
+    local back = Backdrop(name.."Backdrop", parent, offset, {size[1] +2, size[2] +2},{0,0,0,1}, {0,0,0,0.5})
+    local icon = {
+        icon = texture,
+        back = back,
+        SetHidden = function(self,state)
+            self.icon:SetHidden(state)
+            self.back:SetHidden(state)
+        end
+    }
+    return icon
+
+end
 
 function UI.ResourceBar( name, parent, offset, playerName , resourceType)
     if(name == nil or name == "") then return end
@@ -148,7 +144,7 @@ function UI.ResourceBar( name, parent, offset, playerName , resourceType)
         back = Backdrop(name.."Backdrop", parent, offset, {UI.ResourceBarSettings.dimX +2, UI.ResourceBarSettings.dimY +2},{0,0,0,1}, {0,0,0,0.5}),
         bar = Statusbar(name.."StatusBar" , parent , UI.resourceColors[resourceType], offset, {UI.ResourceBarSettings.dimX,UI.ResourceBarSettings.dimY}),
        -- pctLabel = Label(name.."PctLabel", parent, " ", {offset[1] + UI.ResourceBarSettings.dimX - 32, offset[2] + 1} , TOPLEFT),
-        nameLabel = CustomLabel(name.."NameLabel", parent, playerName, {offset[1] + 4, offset[2] + 1}, TOPLEFT,"ZoFontWinH4"),
+        nameLabel = CustomLabel(name.."NameLabel", parent, playerName, {offset[1] + 4, offset[2] + 1}, TOPLEFT,"ZoFontWinH5"),
 
 
         SetValue = function ( self, value)
@@ -204,7 +200,7 @@ end
 function UI.UltimateNotifier(name, parent, offset, texture)
     local dn = {
         timer = 0,
-        icon = Texture(name.."Texture", parent, offset, texture, {UI.UltNotifier.iconW,UI.UltNotifier.iconH}),
+        icon = UI.Texture(name.."Texture", parent, offset, texture, {UI.UltNotifier.iconW,UI.UltNotifier.iconH}),
         back = Backdrop(name.."Backdrop", parent , {offset[1],offset[2]}, {UI.UltNotifier.iconW + 2,UI.UltNotifier.iconH + 2},{0,0,0,1},{0,0,0,0.4}),
         --bar = Statusbar(name.."StatusBar" , parent , UI.resourceColors.ultimate, {offset[1] + UI.UltNotifier.iconW, offset[2]}, {UI.UltNotifier.dimX - UI.UltNotifier.iconW, UI.UltNotifier.dimY}),
         timerLabel = CustomLabel(name.."Timer", parent, "", {offset[1] + 4, offset[2] + 1}, TOPLEFT,"ZoFontWinH4"),
@@ -253,12 +249,12 @@ end
 --[[
     Displays a single Ultimate up-status
  ]]
-function UI.UltimateBar (name, parent, offset, playerName, texture)
+function UI.UltimateBar2 (name, parent, offset, playerName, texture)
     if(name == nil or name == "") then return end
 
     local ultimateBar = {
         comps = {},
-        icon = Texture(name.."Texture", parent, offset, texture, {UI.UltBarSet.iconW,UI.UltBarSet.iconH}),
+        icon = UI.Texture(name.."Texture", parent, offset, texture, {UI.UltBarSet.iconW,UI.UltBarSet.iconH}),
         back = Backdrop(name.."Backdrop", parent , offset, {UI.UltBarSet.dimX+2, UI.UltBarSet.dimY+2},{0,0,0,1},{0,0,0,0.5}),
         bar = Statusbar(name.."StatusBar" , parent , UI.resourceColors.ultimate, {offset[1] + UI.UltBarSet.iconW, offset[2]}, {UI.UltBarSet.dimX - UI.UltBarSet.iconW, UI.UltBarSet.dimY}),
         --pctLabel = CustomLabel(name.."PctLabel", parent, " ", {offset[1] + UI.UltBarSet.dimX - 32, offset[2] + 1} , TOPLEFT, "ZoFontWinH4"),
@@ -304,13 +300,55 @@ function UI.UltimateBar (name, parent, offset, playerName, texture)
     return ultimateBar;
 end
 
+--[[
+    Displays a single Ultimate up-status
+ ]]
+function UI.UltimateBar(name, parent, offset, playerName, texture)
+    if(name == nil or name == "") then return end
+
+    local ultimateBar = {
+        back = Backdrop(name.."Backdrop", parent , offset, {UI.UltBarSet.dimX+2, UI.UltBarSet.dimY+2},{0,0,0,1},{0,0,0,0.5}),
+        bar = Statusbar(name.."StatusBar" , parent , UI.resourceColors.ultimate, {offset[1], offset[2]}, {UI.UltBarSet.dimX, UI.UltBarSet.dimY}),
+        nameLabel = CustomLabel(name.."NameLabel", parent, playerName, {offset[1]+ 4, offset[2] + 3}, TOPLEFT,"ZoFontWinT2"),
+
+        SetValue = function ( self, value)
+            --self.pctLabel:SetText(value)
+            self.bar:SetValue( value )
+            if(value < UI.UltBarSet.threshold) then
+                self:SetHidden(true)
+            else
+                self:SetHidden(false)
+            end
+            if(value >= 100) then
+                self.bar:SetColor(unpack(UI.resourceColors.ultimateUp))
+            else
+                self.bar:SetColor(unpack(UI.resourceColors.ultimate))
+            end
+
+        end,
+        SetHidden = function (self, state)
+            self.bar:SetHidden(state)
+            self.nameLabel:SetHidden(state)
+            --self.pctLabel:SetHidden(state)
+            self.back:SetHidden(state)
+            --self.icon:SetHidden(state)
+        end,
+        SetName = function (self, name)
+            self.nameLabel:SetText( name )
+        end,
+
+    }
+
+
+    return ultimateBar;
+end
 
 
 function UI.DamageList(name, parent, offset, size)
     if(name == nil or name == "") then return end
 
     local damage = {
-        back = Backdrop(name.."Backdrop", parent, offset, {2*UI.DmgSet.nameW + 2*UI.DmgSet.dmgW, UI.DmgSet.cellHeight*size},{0,0,0,0.4},{0,0,0,0.3}),
+        back = Backdrop(name.."Backdrop", parent, offset, {2*UI.DmgSet.nameW + 2*UI.DmgSet.dmgW, UI.DmgSet.cellHeight*size},{0,0,0,0.4},{0,0,0,0.1}),
         damageLabel = CustomLabel(name.."dmglabel", parent, "", {offset[1]+3, offset[2]}, TOPLEFT,"ZoFontGameSmall"),
         healingLabel = CustomLabel(name.."heallabel", parent, "", {offset[1]+UI.DmgSet.dmgW + UI.DmgSet.nameW, offset[2]}, TOPLEFT,"ZoFontGameSmall"),
         damageVal = CustomLabel(name.."damageVal", parent, "", {offset[1]+3 + UI.DmgSet.nameW, offset[2]}, TOPLEFT,"ZoFontGameSmall"),
@@ -345,16 +383,10 @@ function UI.DamageList(name, parent, offset, size)
 end
 
 function UI.UltSys(control, length)
-
    local ultsys = {
-
        component = {
-
            -- list of labelsys
-           ultgroup = {}
-
-       },
-
+           ultgroup = {}},
        -- upon Update, notifty all labels about each player
         Update = function(self,playerlist)
             for player in playerlist do
@@ -362,17 +394,12 @@ function UI.UltSys(control, length)
                     ultgroup:ProcessPlayer(player)
                 end
             end
-
         -- update all ultgroups
             for ultgroup in pairs(self.component.ultgroup) do
                 ultgroup:Update()
             end
-
         end,
-
     }
-
-
 end
 
 function UI.UltGroup()
@@ -419,7 +446,7 @@ function UI.UltBar(name, parent,offset)
 
     local ultimateBar = {
         comps = {
-            icon = Texture(name.."Texture", parent, offset, texture, {UI.UltBarSet.iconW,UI.UltBarSet.iconH}),
+            icon = UI.Texture(name.."Texture", parent, offset, texture, {UI.UltBarSet.iconW,UI.UltBarSet.iconH}),
             back = Backdrop(name.."Backdrop", parent , offset, {UI.UltBarSet.dimX+2, UI.UltBarSet.dimY+2},{0,0,0,1},{0,0,0,0.5}),
             bar = Statusbar(name.."StatusBar" , parent , UI.resourceColors.ultimate, {offset[1] + UI.UltBarSet.iconW, offset[2]}, {UI.UltBarSet.dimX - UI.UltBarSet.iconW, UI.UltBarSet.dimY}),
             --pctLabel = CustomLabel(name.."PctLabel", parent, " ", {offset[1] + UI.UltBarSet.dimX - 32, offset[2] + 1} , TOPLEFT, "ZoFontWinH4"),
@@ -526,6 +553,20 @@ function RO.CreateSettingsWindow()
             type = "description",
             text =  "Select which Ultimates should be displayed on which position from left to right. \n" ..
                     "WARNING: Picking the same Ultimate for 2 different positions will bug out"
+
+        },
+        {
+            type = "slider",
+            name = "Amount of Ultimates",
+            tooltip = "Limit amount of displayed labels",
+            min = 1,
+            max = 6,
+            step = 1,
+            getFunc = function() return RO.SavedVars.UltimateUI.labelAmount end,
+            setFunc = function(value)
+                RO.SavedVars.UltimateUI.labelAmount = value
+                RO.UltUI.InitUltimateBars()
+            end,
 
         },
     }
