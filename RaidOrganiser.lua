@@ -137,7 +137,7 @@ end
 
 -- Check wether tag belongs to a real unit or to a dummy
 function RO.IsRealTag( tag )
-    return not (tag:sub(1,4) == "test")
+    return not (tag:sub(1,6) == "test")
 end
 
 -- returns inverse table (oldTable[k] = v => newTable[v] = k)
@@ -190,10 +190,9 @@ end
 function RO.UnitDisplayNameFromTag(tag)
     local displayName = GetUnitDisplayName(tag)
     --
-    return RO.IsRealTag(tag)
-            and ((displayName ~= nil)
-                    and RO.SavedVars.nicknames[displayName]
-                    or string.sub(displayName,2,6))
+    return displayName ~= nil
+            and (RO.SavedVars.nicknames[displayName]
+                 or string.sub(displayName,2,6))
             or tag
 end
 
@@ -232,34 +231,29 @@ function RO.Init()
     EVENT_MANAGER:UnregisterForEvent(EVENT_ADD_ON_LOADED)
 
     RO.CreateSettingsWindow()
+    RO.Player.Init()
     RO.UltUI.Init()
     RO.Ultimate.Init()
     RO.Combat.Init()
-    --RO.Resources.Init()
-    --RO.ResUI.Init()
+    RO.Resources.Init()
+    RO.ResUI.Init()
     RO.Ping.Init()
     RO.Chat.Init()
-    RO.Player.Init()
-    for i = 0, dummyCap do
-        dummies[i] = RO.NewDummy(i)
-    end
+
+
     RO.UIHandler()
 end
 
 -- Update all UI Elements repeadetly
 function RO.UIHandler()
     -- if dummies are enabled
-    if(enableDummies) then
-        for i = 1, dummyCap do
-            dummies[i]:SendPing()
-        end
-    end
+
     -- update UI Elements
     for i,v in pairs(RO.ui) do
         v.UpdateUI()
     end
 
-    RO_UltNotify1:SetText((RO.Player.list["Fel's Sister"].health.max) .. "\n" .. (RO.Player.list["Fel's Sister"].health.recentMax) .. "\n" .. (RO.Player.list["Fel's Sister"].health.desyncMax) .. "\n")
+    --RO_UltNotify1:SetText((RO.Player.list["Fel's Sister"].health.max) .. "\n" .. (RO.Player.list["Fel's Sister"].health.recentMax) .. "\n" .. (RO.Player.list["Fel's Sister"].health.desyncMax) .. "\n")
     -- repeat later
     zo_callLater(RO.UIHandler, REFRESH_UI_TIMER)
 end
@@ -276,7 +270,7 @@ end
 
 --      return a new dummy.
 --      Enable dummies ingame with /ro_dummies. Reloadui to disable again.
-function RO.NewDummy(num)
+function RO.NewDummyOld(num)
     local dummy = {
         roles = {math.random() > 0.5, math.random() > 0.5, math.random() > 0.5 },
         name = "Player " .. num,
@@ -285,8 +279,9 @@ function RO.NewDummy(num)
         id = math.random(1,6),
         ult = 50,
         num = math.random(4),
-        tag = "test"..num,
+        tag = "group"..num,
         ultgain = math.random(1,3),
+
         SendPing = function(self)
             RO.Ping.OnPing(_, _, _, self.tag, RO.Ultimate.GeneratePingDataDummy(self.id, self.ult), RO.Combat.GeneratePingDataDummy(), _)
             self:Update()
@@ -305,6 +300,8 @@ function RO.NewDummy(num)
 end
 
 
+
+
 --============================================ EVENT HANDLING  =========================================================
 
 -- TODO: overthink this method
@@ -312,12 +309,25 @@ function RO.RegisterEvents()
     EVENT_MANAGER:RegisterForEvent(RO.name, EVENT_MAP_PING, RO.OnPing)
     EVENT_MANAGER:RegisterForEvent(RO.name, EVENT_COMBAT_EVENT, RO.OnCombatEvent)
     EVENT_MANAGER:AddFilterForEvent(RO.name,EVENT_COMBAT_EVENT, REGISTER_FILTER_SOURCE_COMBAT_UNIT_TYPE, 1)
+    EVENT_MANAGER:RegisterForEvent(RO.name, EVENT_POWER_UPDATE, RO.OnPowerUpdate)
+    EVENT_MANAGER:RegisterForEvent(RO.name, EVENT_GROUP_MEMBER_LEFT, RO.OnMemberLeft)
+    EVENT_MANAGER:RegisterForEvent(RO.name, EVENT_GROUP_MEMBER_JOINED, RO.OnMemberJoined)
+    EVENT_MANAGER:RegisterForEvent(RO.name, EVENT_GROUP_UPDATE, RO.OnGroupChange)
+
 end
 
 function RO.OnCombatEvent(...)
     for i, v in pairs(notifyOnCombatEvent) do
         v.OnCombatEvent(...)
     end
+end
+
+function RO.OnMemberLeft(...)
+    RO.Player.Left(...)
+end
+
+function RO.OnMemberJoined(...)
+    RO.Player.Join(...)
 end
 
 function RO.OnChatMessage( code, channel, from, text, isCustomerService, fromDisplayName)
@@ -434,5 +444,4 @@ end
 EVENT_MANAGER:RegisterForEvent(RO.name,EVENT_ADD_ON_LOADED, RO.OnAddonLoaded)
 EVENT_MANAGER:RegisterForEvent(RO.name, EVENT_GROUP_MEMBER_ROLES_CHANGED, RO.OnGroupChange)
 EVENT_MANAGER:RegisterForEvent(RO.name, EVENT_CHAT_MESSAGE_CHANNEL, RO.OnChatMessage)
-EVENT_MANAGER:RegisterForEvent(RO.name, EVENT_POWER_UPDATE, RO.OnPowerUpdate)
 EVENT_MANAGER:RegisterForEvent(RO.name, EVENT_PLAYER_ACTIVATED, OnPlayerActivated)

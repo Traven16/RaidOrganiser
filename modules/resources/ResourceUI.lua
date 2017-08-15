@@ -1,8 +1,8 @@
 
-local RaidOrganiser = RO
+local RO = RO
 
-RaidOrganiser.ResUI = {}
-local ResUI = RaidOrganiser.ResUI
+RO.ResUI = {}
+local ResUI = RO.ResUI
 local this = ResUI
 local threshold = 110
 
@@ -16,7 +16,8 @@ local labels = {
     [2] = RO_ResourcesMag,
 }
 
-local resourceBars = {}
+RO.healthBars = {}
+local healthBars = RO.healthBars
 
 
 local resourceLabels = {
@@ -35,12 +36,14 @@ end
 
 local function DisplayResourceBars( sortedList, parent )
     for k = 1, #sortedList do
+        healthBars[k] = healthBars[k] or {}
         local length = #sortedList[k]
         for i = 1, maxTrackSize do
+            healthBars[k][i] = healthBars[k][i] or {}
             if(i <= length) then
-                FillResourceBar(resourceBars[k][i], sortedList[k][i])
+                FillResourceBar(healthBars[k][i], sortedList[k][i])
             else
-                resourceBars[k][i]:SetHidden(true)
+                healthBars[k][i]:SetHidden(true)
             end
 
 
@@ -117,8 +120,8 @@ end
 -- set up the UltimateUI
 -----------------------------------------------------
 function ResUI.Init()
-    Save = RaidOrganiser.SavedVars.ResourceUI
-    table.insert(RaidOrganiser.ui, ResUI)
+    Save = RO.SavedVars.ResourceUI
+    table.insert(RO.ui, ResUI)
     ResUI.restorePos()
     ResUI.InitResourceBars()
 
@@ -126,13 +129,16 @@ function ResUI.Init()
 end
 
 function ResUI.InitResourceBars()
-    for k = 1, #labels do
-        resourceBars[k] = {}
-        for i = 1, maxTrackSize do
-            resourceBars[k][i] = RaidOrganiser.UI.ResourceBar("ResourceBar"..k..","..i, labels[k], {0, (RaidOrganiser.UI.ResourceBarSettings.dimY+1)* (i - 1)}, "", resourceLabels[k]  )
-           -- resourceBars[k][i]:SetHidden(true)
+    local sizeX, sizeY = RO.UI.HpBarSet.sizeX, RO.UI.HpBarSet.sizeY
+
+    for x = 1, sizeX do
+        healthBars[x] = healthBars[x] or {}
+        for y = 1, sizeY do
+            healthBars[x][y] = healthBars[x][y] or {}
+            healthBars[x][y] = RO.UI.HealthBar("Healthbar"..x..","..y,RO_ResourcesHP,{(RO.UI.HpBarSet.dimX+3)*x,(RO.UI.HpBarSet.dimY+3)*y})
         end
     end
+
 end
 
 -----------------------------------------------------
@@ -143,19 +149,15 @@ end
 function ResUI.SetupUI()
 
     for i=1, labelAmount  do
-        resourceLabels[i]:SetText(RaidOrganiser.SavedVars.resourceNames[i])
+        resourceLabels[i]:SetText(RO.SavedVars.resourceNames[i])
     end
 
 end
 
----------------------------------------------
--- CALLED BY: RO.UIHandler
----------------------------------------------
--- fills the ultimate
----------------------------------------------
+--[[
 function ResUI.UpdateUI()
     -- d("updateUI")
-    local resourceData = RaidOrganiser.Resources.GetData()
+    local resourceData = RO.Resources.GetData()
     local sortedList = ToSortedLabelList(resourceData)
 
 
@@ -166,13 +168,38 @@ function ResUI.UpdateUI()
 
     DisplayResourceBars(sortedList)
 
---[[
+
     for i=1, labelAmount do
         local w = labels[i]
         w:SetText(RaidOrganiser.SavedVars.resourceNames[i] .. "\n".. PrintListToLabel(labelList[i]))
     end
-    --]]
+    --
 end
+--]]
+
+function ResUI.UpdateUI()
+
+    for tag,player in pairs(RO.Player.tag) do
+        local id = tag:sub(6)
+        local x = math.ceil(id / RO.UI.HpBarSet.sizeY)
+        local y = (id % RO.UI.HpBarSet.sizeY)
+        y = (y ~= 0)
+                and y
+                or RO.UI.HpBarSet.sizeY
+
+        --d("id: " .. id .. ", x: " .. x .. ", y: " ..  y)
+        if player.exists then
+            healthBars[x][y]:Update(tag,player)
+        else
+            healthBars[x][y]:SetHidden(true)
+        end
+
+
+
+    end
+
+end
+
 
 
 function ResUI.savePos( self )

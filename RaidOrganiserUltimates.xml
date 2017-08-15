@@ -39,14 +39,12 @@
 				RO.ResUI.savePos( self )
 			</OnMoveStop>
 			<Controls>
-				<Label name="$(parent)Mag" font="ZoFontWinH5" text="" hidden = "false">
+				<Label name="$(parent)HP" font="ZoFontWinT2" text="" hidden = "false">
 					<Anchor point="TOPLEFT" offsetX="0" offsetY="0"/>
-				</Label>
-				<Label name="$(parent)Stam" font="ZoFontWinH5" text="" hidden="false">
-					<Anchor point="TOPLEFT" offsetX="130" offsetY="0"/>
 				</Label>
 			</Controls>
 		</TopLevelControl>
+
 
 		<TopLevelControl name="RO_UltNumber" moveable="false" mouseEnabled="false" hidden="false" >
 			<Anchor point="LEFT" relativeTo="GuiRoot" offsetX="1000" offsetY="0"/>

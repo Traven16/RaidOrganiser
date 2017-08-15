@@ -4,20 +4,6 @@ RaidOrganiser.Resources = {}
 local Resources = RaidOrganiser.Resources
 local this = Resources
 local resourceData = { }
-local help = "1 = [- - DPS]         => DPS Mag\n" ..
-             "2 = [- HEAL -]        => Healing Templar\n" ..
-             "3 = [- HEAL DPS]      => (unbound)\n" ..
-             "4 = [TANK - -]              => NEGATE\n" ..
-             "5 = [TANK - DPS]            => SLEET\n" ..
-             "6 = [TANK HEAL -]                => METEOR\n" ..
-             "7 = [TANK HEAL DPS]                => (unbound)\n" ..
-             "8 = [- - -]             => (unbound)\n"
-
-
----------------------------------
----- LOCAL FUNCTIONS ------------
----------------------------------
-
 
 
 ---------------------------------

@@ -8,6 +8,15 @@ UI.ResourceBarSettings = {
     dimY = 25,
 }
 
+UI.HpBarSet = {
+    dimX = 80,
+    dimY = 30,
+    sizeX = 4,
+    sizeY = 6,
+    col = {1,0,0,0.7}
+
+}
+
 UI.UltBarSet = {
     dimX = 50,
     dimY = 22,
@@ -161,14 +170,8 @@ function UI.ResourceBar( name, parent, offset, playerName , resourceType)
         SetName = function (self, name)
             self.nameLabel:SetText(name)
         end,
-
     }
-
-
-
     return resourceBar;
-
-
 end
 
 
@@ -343,6 +346,43 @@ function UI.UltimateBar(name, parent, offset, playerName, texture)
     return ultimateBar;
 end
 
+function UI.HealthBar(name,parent,offset)
+    if(name == nil or name == "") then return end
+
+    local healthbar = {
+        back = Backdrop(name.."Backdrop", parent , offset, {UI.HpBarSet.dimX+2, UI.HpBarSet.dimY+2},{0,0,0,1},{0,0,0,0.5}),
+        bar = Statusbar(name.."StatusBar" , parent , UI.HpBarSet.col, offset, {UI.HpBarSet.dimX, UI.HpBarSet.dimY}),
+        nameLabel = CustomLabel(name.."NameLabel", parent, "", {offset[1]+ 4, offset[2] + 3}, TOPLEFT,"ZoFontWinH4"),
+
+        SetValue = function ( self, tag, value)
+            if(value == 0) then
+                self:SetHidden(true)
+            else
+                self:SetHidden(false)
+                self.bar:SetValue( value )
+            end
+        end,
+        SetHidden = function (self, state)
+            self.bar:SetHidden(state)
+            self.nameLabel:SetHidden(state)
+            self.back:SetHidden(state)
+        end,
+        SetName = function (self, name)
+            self.nameLabel:SetText( name )
+        end,
+        Update = function (self, tag, player)
+            local health = player.health
+            self:SetValue(tag,(health.max - health.desyncMax / health.max * 100) or 0)
+            self:SetName(RO.UnitDisplayNameFromTag(tag))
+            if not player.exists then
+                self:SetHidden(true)
+            end
+        end
+    }
+    healthbar:SetHidden(true)
+    return healthbar;
+
+end
 
 function UI.DamageList(name, parent, offset, size)
     if(name == nil or name == "") then return end
@@ -505,13 +545,6 @@ function RO.CreateSettingsWindow()
         {
             type = "header",
             name = "General Settings",
-        },
-        {
-            type = "checkbox",
-            name = "Count charged Ultimates",
-            tooltip = "Display above each group of Ultimates how many Ultimates of this type are ready.",
-            getFunc = function() return RO.SavedVars.Settings.showCharged end,
-            setFunc = function(value) RO.SavedVars.Settings.showCharged = not RO.SavedVars.Settings.showCharged end,
         },
         {
             type = "checkbox",

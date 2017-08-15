@@ -89,7 +89,9 @@ end
 function Ultimate.GetData()
     local ultimateData = {}
     for tag,player in pairs(RO.Player.tag) do
-        ultimateData[tag] = player.ultimate
+        if player.exists then
+            ultimateData[tag] = player.ultimate
+        end
     end
 
     return ultimateData

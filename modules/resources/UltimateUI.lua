@@ -88,8 +88,11 @@ local function DisplayUltimateBars( sortedList )
                     plus = true
                     count = count + 1
                 end
-                if(GetUnitName("player") == sortedList[k][i].tag) then
+
+                if(AreUnitsEqual("player", sortedList[k][i].tag)) then
+
                     if(RO.SavedVars.Settings.showNumber) then
+
                         if(plus) then
                             RO_UltNumber1:SetText("|c00ff00 #" .. i .. "|r")
                         else
@@ -104,10 +107,11 @@ local function DisplayUltimateBars( sortedList )
             else
                 ultimateBars[k][i]:SetHidden(true)
             end
-            if count == 0 and RO.SavedVars.Settings.notify[k] then
-                s = s .. string.upper(GetAbilityName(RO.SavedVars.Ultimate.ultimates[RO.SavedVars.Ultimate.added.id[k]].id) .. "\n")
-            end
         end
+        if count == 0 and RO.SavedVars.Settings.notify[k] then
+            s = s .. string.upper(GetAbilityName(RO.SavedVars.Ultimate.ultimates[RO.SavedVars.Ultimate.added.id[k]].id) .. "\n")
+        end
+
     end
     RO_UltNotify1:SetText(s)
     if(not IsUnitGroupLeader("player")) then
@@ -151,15 +155,16 @@ function UltUI.UpdateNotifier()
 end
 
 function UltUI.InitUltimateBars()
+    local offset = 12
     for k = 1,#labels do
-        icons[k] = RO.UI.Texture("RO_UltimateIcon"..k, labels[k], {(8) / 2,0}, RO.SavedVars.Ultimate.added.icon[k], {RO.UI.UltBarSet.dimX-8, 32})
+        icons[k] = RO.UI.Texture("RO_UltimateIcon"..k, labels[k], {(offset) / 2,0}, RO.SavedVars.Ultimate.added.icon[k], {RO.UI.UltBarSet.dimX-offset, 32})
         icons[k]:SetHidden((k > Save.labelAmount))
 
         ultimateBars[k] = {}
         for i = 1, maxTrackSize do
             labels[k]:ClearAnchors()
             labels[k]:SetAnchor(TOPLEFT, RO_Ultimate, TOPLEFT, (k-1)*(RO.UI.UltBarSet.dimX+5), 0)
-            ultimateBars[k][i] = RO.UI.UltimateBar("UltimateBar"..k..","..i, labels[k], {0, (RO.UI.UltBarSet.dimY+1)* (i+0.6)}, "", RO.SavedVars.Ultimate.added.icon[k] )
+            ultimateBars[k][i] = RO.UI.UltimateBar("UltimateBar"..k..","..i, labels[k], {0, (RO.UI.UltBarSet.dimY+3)* (i+0.6)}, "", RO.SavedVars.Ultimate.added.icon[k] )
             ultimateBars[k][i]:SetHidden(true)
         end
     end

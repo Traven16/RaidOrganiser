@@ -8,8 +8,10 @@ Combat.identifier = ""
 
 --========================================== LOCAL VARIABLES ===========================================================
 local trackedStats = { "dmgD" , "healD", "buffs", "maneuver" }
-local combatData = {}
+RO.combatData = {}
+local combatData = RO.combatData
 local realCombatData = {}
+
 local unprocessed  = {0,0,}
 local sent = {0,0,0,0,}
 local missingHealth = {}
@@ -59,7 +61,7 @@ local function GeneratePingData( num )
         end
     end
     local coord = prefix / RO.PING_FACTOR_1 + sendVal / RO.PING_FACTOR_4
-    --d(coord)
+   -- d(coord)
     return coord
 end
 
@@ -256,6 +258,8 @@ function Combat.GenerateChatData()
     return chatMessage
 end
 
+
+
 -- Required function to use the ChatHandler
 function Combat.ProcessChatData( unitTag, message )
    -- d("combatData")
@@ -322,6 +326,8 @@ function Combat.PrintData( i )
     StartChatInput(Combat.DataString(i), CHAT_CHANNEL_PARTY, nil)
 end
 
+
+
 --============================================ EVENT HANDLING  =========================================================
 
 function Combat.OnPowerUpdate(eventCode, unitTag, powerIndex, powerType, powerValue, powerMax, powerEffectiveMax)
@@ -351,11 +357,22 @@ function Combat.OnCombatEvent(code, result, isError, abilityName, graphic, actio
 
     --==== HEALING ======
     if (result == ACTION_RESULT_HEAL) or (result == ACTION_RESULT_CRITICAL_HEAL) or (result == ACTION_RESULT_HOT_TICK) or (result == ACTION_RESULT_HOT_TICK_CRITICAL) then
-        if(missingHealth[targetName] == nil) then
+       --[[ if(missingHealth[targetName] == nil) then
+
             return
         else
             hitValue = math.min(missingHealth[targetName], hitValue)
-        end
+            d(hitValue)
+        end--]]
+
+        ---[[
+        local target = RO.Player.list[targetName:sub(1,#targetName-3)]
+        if target then
+            hitValue = math.min ( hitValue, target.health.desyncMax - target.health.current)
+        else
+            return
+        end --]]
+
         if(realCombatData[2][abilityName] == nil) then
             realCombatData[2][abilityName] = Combat.NewCombat()
         end
@@ -388,6 +405,7 @@ local DESYNC_TIMER = 7000
 
 function Player.New(tag)
     local player = {
+        exists = DoesUnitExist(tag),
         attribut = {
             unitTag = tag,
             dmg = 0,
@@ -410,7 +428,8 @@ function Player.New(tag)
             damage = RO.Combat.NewCombat(),
             healing = RO.Combat.NewCombat(),
         },
-        UpdateHealth = function(self, powerValue)
+        UpdateHealth = function(self, powerValue,powerMax)
+            self.health.max = powerMax
             self.health.time = GetGameTimeMilliseconds()
             self.health.current = powerValue
             self.health.recentMax = math.max(self.health.recentMax, powerValue)
@@ -421,6 +440,7 @@ function Player.New(tag)
                 self.health.recentMax = self.health.current
                 self.health.desyncTime = self.health.time
             end
+            self.health.desyncMax = math.min(self.health.desyncMax,self.health.max)
 
 
         end,
@@ -456,13 +476,13 @@ function Combat.OnPowerUpdate(eventCode, unitTag, powerIndex, powerType, powerVa
     local time = GetGameTimeMilliseconds()
     -- filter only health updates
     if(powerType == POWERTYPE_HEALTH) then
-        Player.tag[unitTag]:UpdateHealth(powerValue)
+        Player.tag[unitTag]:UpdateHealth(powerValue,powerMax)
     end
 end
 
 function Player.Init()
-
-    for i = 1, GetGroupSize() do
+    RO.RegisterForGroupChangeNotification(Player)
+    for i = 1, 24 do
         local tag = "group"..i
         local name = GetUnitName(tag)
         Player.list[name] = Player.New(tag)
@@ -473,28 +493,26 @@ function Player.Init()
 end
 
 --
-function Player.Join()
-    for i = 1, GetGroupSize() do
-        local tag = "group"..i
-        local name = GetUnitName(tag)
-        if not Player.list[name] then
-            Player.list[name] = Player.New(tag)
-        end
-    end
+function Player.Join(_, _)
     Player.UpdateTags()
 end
 
-function Player.Leave(name)
+function Player.Leave(eventCode, name, reason, isLocalPlayer, isLeader, memberDisplayName, actionRequiredVote)
     Player.list[name] = nil
     Player.UpdateTags()
 end
 
 function Player.UpdateTags()
-    for i = 1, GetGroupSize() do
+    for i = 1, 24 do
         local tag = "group"..i
         local name = GetUnitName(tag)
-        Player.list[name].attribut.unitTag = tag
-        Player.tag[tag] = Player.list[name]
+        if name then
+            Player.list[name].attribut.unitTag = tag
+            Player.tag[tag] = Player.list[name]
+        else
+            Player.tag[tag].exists = false
+        end
+
     end
 
 end
